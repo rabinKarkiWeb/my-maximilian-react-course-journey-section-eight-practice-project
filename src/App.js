@@ -3,6 +3,7 @@ import OutputView from "./Output/OutputView";
 import ModalView from "./Modal/ModalView";
 import InputField from "./InputField/InputField";
 import {useState} from "react";
+import ReactDOM from "react-dom"
 function App() {
     const [userList, setUserList] =useState([]);
     const [error, setError] =useState(false);
@@ -40,7 +41,11 @@ function App() {
     <main className='flex bg-slate-300 flex-col gap-7 h-screen pt-36 items-center'>
       <InputField onSave={saveDataHandler} users={userList} errorModal={setErrorModal} modalText={ModalTextHandler}/>
       <OutputView data={userList} />
-      <ModalView status={error} message={modaltext} close={ModalCloseHandler}/>
+        {ReactDOM.createPortal(
+      <ModalView status={error} message={modaltext} close={ModalCloseHandler}/>,
+            document.getElementById('modal')
+        )
+        }
     </main>
   );
 }
