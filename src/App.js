@@ -14,39 +14,22 @@ function App() {
             }
         );
     }
+    const setErrorModal = (x) => {
+        setError(x);
+    }
+    const ModalTextHandler = (x) => {
+        setModalText(x);
+    }
+    const ModalCloseHandler = () => {
+        setError(false);
+    }
 
 
 
     // const showModalHandler = (value) => {
     //     return <ModalView message={value}/>;
     // }
-    const checkErrorHandler = (datas) => {
-        const PrevUserNameCheckHandler= (data) => {
-          let NameCheck = userList.filter(item => item.name === data.name);
-          console.log(NameCheck.length);
-          return NameCheck.length;
-        }
-        console.log(datas.age,"this is datas.age");
 
-        if (datas.age < 0 || PrevUserNameCheckHandler(datas)>0){
-          if (PrevUserNameCheckHandler(datas) > 0){
-              const modaltexttemp ="User-Name already Exists";
-              setModalText(modaltexttemp);
-
-          }else if (datas.age < 0){
-              const modaltexttempp ="Age cant be a zero or a negative value.";
-              setModalText(modaltexttempp);
-          }else {
-
-              setModalText("Unknown Error");
-          }
-            setError(true);
-
-        }else{
-            saveDataHandler(datas);
-            console.log(modaltext);
-        }
-    }
     // const ModalCloseHandler = (x) => {
     //     if (!x){
     //     setError(false);
@@ -54,10 +37,10 @@ function App() {
     //     console.log(error);
     // }
   return (
-    <main className='flex flex-col gap-7 h-screen p-20 items-center'>
-      <InputField onSave={checkErrorHandler}/>
+    <main className='flex bg-slate-300 flex-col gap-7 h-screen pt-36 items-center'>
+      <InputField onSave={saveDataHandler} users={userList} errorModal={setErrorModal} modalText={ModalTextHandler}/>
       <OutputView data={userList} />
-      <ModalView status={error} message={modaltext}/>
+      <ModalView status={error} message={modaltext} close={ModalCloseHandler}/>
     </main>
   );
 }
